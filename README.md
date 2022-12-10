@@ -63,7 +63,7 @@ function binarySearchRecursive(
 
 ## Sorting Algorithms
 
-## Insertion Sort
+### Insertion Sort
 
 ```
 type InsertionSortT = (arr: number[]) => number[];
@@ -87,5 +87,112 @@ function insertionSort(arr: number[]): number[] {
     return newArr;
   }
   return findMinAndRemove(arr);
+}
+```
+
+## Linked Lists
+
+A linked list is a linear data structure similar to an array. Each element is a separate object
+that contains a pointer to the next object in that list. Each element contains two items: The data stored and the link to the next node. 
+
+The entry point to a linked list is called a head. The last node on this list points to null. If a list is empy, the head is a null reference. 
+
+This is what a linked list looks like in Javascript:
+
+```
+const list = {
+  head: {
+    value: 6
+    next: {
+      value: 10
+      next: {
+        value: 12
+        next: {
+          value: 3
+          next: null
+        }
+      }
+    }
+  }
+}
+```
+
+An advantage of a linked list is that nodes can easily be removed or added from a linked list without re-organizing the entire data structure. 
+
+A disadvantage is that search operations are slow. Nodes are accessed sequentially starting from the first node. It also uses more memory that arrays because of the storage of pointers.
+
+### Implementing a list node:
+
+```
+class ListNode {
+  constructir(data) {
+    this.data = data
+    this.next = null
+  }
+}
+```
+
+### Implementing a linked list:
+
+```
+class LinkedList {
+  constructor(head=null) {
+    this.head = head
+  }
+}
+```
+
+### Putting it all together
+
+```
+let node1 = new ListNode(2);
+let node2 = new ListNode(5);
+node1.next = node2;
+
+let list = new LinkedList(node1);
+```
+
+### Adding methods to a linked list
+
+#### size()
+
+```
+size() {
+  let count = 0;
+  let node = this.head;
+  while(node) {
+    count++;
+    node = node.next;
+  }
+  return count;
+}
+```
+
+#### clear()
+
+```
+clear() {
+  this.head = null;
+}
+```
+
+#### getLast()
+
+```
+getLast() {
+  let lastNode = this.head;
+  if(lastNode) {
+    while(lastNode.next) {
+      lastNode = lastNode.next;
+    }
+  }
+}
+```
+
+#### getFirst() 
+
+```
+getFirst() {
+  return this.head;
 }
 ```
