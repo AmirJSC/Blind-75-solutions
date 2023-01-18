@@ -196,3 +196,48 @@ getFirst() {
   return this.head;
 }
 ```
+
+## Two-pointer technique
+
+These kind of problems usually involve two pointers: one slow-runner and the other fast-runner.
+
+Another variation is for one pointer to start from the beginning and the other from the end. 
+They move toward each other until they meet. 
+
+A typical example is reversing the elements in a string.
+
+Without using the two-pointer problem, this is one solution:
+
+```
+function swap(str: string[], i: number, j: number) {
+  let temp = str[i];
+  str[i] = str[j];
+  str[j] = temp;
+}
+
+function reverse(str: string[]) {
+  let { length } = str;
+
+  for (let n = 0; n < length / 2; n++) {
+    console.log(str);
+    swap(str, n, length - 1 - n);
+  }
+
+  return str;
+}
+```
+
+Using the two-pointers:
+
+```
+function reverse(str: string[]) {
+  let i = 0;
+  let j = str.length - 1;
+  while (i < j) {
+    swap(str, i, j);
+    i++;
+    j--;
+  }
+  return str;
+}
+```
