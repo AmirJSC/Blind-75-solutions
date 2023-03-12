@@ -241,3 +241,147 @@ function reverse(str: string[]) {
   return str;
 }
 ```
+
+## Stack and Queue
+
+### Queue
+
+The first element added to the queue will be processed first. Insert operation is called enqueue and the delete operation is called dequeue. (FIFO)
+
+```
+interface IQueue<T> {
+  enqueue(item: T): void;
+  dequeue(): T | undefined;
+  size(): number;
+}
+
+class Queue<T> implements IQueue<T> {
+  private storage: T[] = [];
+
+  constructor(private capacity: number = Infinity) {}
+
+  enqueue(item: T): void {
+    if (this.size() === this.capacity) {
+      throw Error("You have reached maximum capacity");
+    }
+    this.storage.push(item);
+  }
+  dequeue(): T {
+    return this.storage.shift();
+  }
+  size(): number {
+    return this.storage.length;
+  }
+}
+
+const queue = new Queue<string>();
+queue.enqueue("A");
+queue.enqueue("B");
+```
+
+Circular Queue sample implementation
+
+Rules:
+
+Implement the MyCircularQueue class:
+
+MyCircularQueue(k) Initializes the object with the size of the queue to be k.
+int Front() Gets the front item from the queue. If the queue is empty, return -1.
+int Rear() Gets the last item from the queue. If the queue is empty, return -1.
+boolean enQueue(int value) Inserts an element into the circular queue. Return true if the operation is successful.
+boolean deQueue() Deletes an element from the circular queue. Return true if the operation is successful.
+boolean isEmpty() Checks whether the circular queue is empty or not.
+boolean isFull() Checks whether the circular queue is full or not.
+
+```
+class MyCircularQueue {
+  element: number[];
+  size: number;
+  length: number;
+  front: number;
+  back: number;
+  constructor(k: number) {
+    this.element = [];
+    this.size = k;
+    this.length = 0;
+    this.front = 0;
+    this.back = -1;
+  }
+
+  enQueue(value: number): boolean {
+    if (this.isFull()) {
+      return false;
+    }
+    this.back++;
+    this.element[this.back % this.size] = value;
+    this.length++;
+    return true;
+  }
+  deQueue(): boolean {
+    if (this.isEmpty()) {
+      return false;
+    }
+    this.element[this.front % this.size] = null;
+    this.front++;
+    this.length--;
+    return true;
+  }
+  Front(): number {
+    if (this.isEmpty()) {
+      return -1;
+    }
+    return this.element[this.front % this.size];
+  }
+  Rear(): number {
+    if (this.isEmpty()) {
+      return -1;
+    }
+    return this.element[this.back % this.size];
+  }
+  isEmpty(): boolean {
+    return this.length === 0;
+  }
+  isFull(): boolean {
+    return this.length === this.size;
+  }
+}
+```
+
+### Stack
+
+A data structure described as LIFO. An item that was added last will be retrieved first. 
+
+```
+interface IStack<T> {
+  push(item: T): void;
+  pop(): T | undefined;
+  peek(): T | undefined;
+  size(): number;
+}
+
+class Stack<T> implements IStack<T> {
+  private storage: T[] = [];
+
+  constructor(private capacity: number = Infinity) {}
+
+  push(item: T): void {
+    if (this.size() === this.capacity) {
+      throw Error("Stack has reached max capacity");
+    }
+    this.storage.push(item);
+  }
+  pop(): T | undefined {
+    return this.storage.pop();
+  }
+  peek(): T | undefined {
+    return this.storage[this.size() - 1];
+  }
+  size(): number {
+    return this.storage.length;
+  }
+}
+
+const stack = new Stack<string>();
+stack.push("A");
+stack.push("B");
+```
