@@ -252,27 +252,43 @@ The first element added to the queue will be processed first. Insert operation i
 interface IQueue<T> {
   enqueue(item: T): void;
   dequeue(): T | undefined;
+  peek(): T | undefined;
   size(): number;
+  isEmpty(): boolean;
 }
 
 class Queue<T> implements IQueue<T> {
-  private storage: T[] = [];
+  private storage: T[];
+  front: number;
+  back: number;
 
-  constructor(private capacity: number = Infinity) {}
+  constructor() {
+    this.storage = [];
+    this.front = 0;
+    this.back = 0;
+  }
 
   enqueue(item: T): void {
-    if (this.size() === this.capacity) {
-      throw Error("You have reached maximum capacity");
-    }
-    this.storage.push(item);
+    this.storage[this.back] = item;
+    this.back++;
   }
   dequeue(): T {
-    return this.storage.shift();
+    const item = this.storage[this.front];
+    delete this.storage[this.front];
+    this.front++;
+    return item;
   }
   size(): number {
-    return this.storage.length;
+    return this.back - this.front;
+  }
+  peek(): T {
+    return this.storage[this.front];
+  }
+  isEmpty() {
+    return this.back === 0;
   }
 }
+
 
 const queue = new Queue<string>();
 queue.enqueue("A");
@@ -280,6 +296,15 @@ queue.enqueue("B");
 ```
 
 Circular Queue sample implementation
+
+This type of queue is more memory efficient unlike the simple queue. Here, the last position is connected to the first position.
+
+Let's say we have a full simple queue -> [1,2,3,4,5]
+
+If we dequeue, it would look like this -> [,2,3,4,5]
+
+There's a vacant space at the front but we cannot enqueue anymore. One benefit of circular queue
+is we can make use of the space at the front. In a normal queue, once the queue becomes full and we dequeue an element, we still cannot insert even if there is space at the front. 
 
 Rules:
 
